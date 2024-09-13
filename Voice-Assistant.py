@@ -4,19 +4,19 @@ from elevenlabs import stream
 
 # Environment settings
 os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"
-elevenlabs_client = ElevenLabs(api_key="sk_36d9ac569bee03392bb2bc558830ea96be79544936603a3f")
+elevenlabs_client = ElevenLabs(api_key="key-here")
 
 # RapidAPI details
-rapidapi_key = "012d97dff3msh3a2810ff8204035p150686jsnb65bf13b5fa2"  # Replace with your RapidAPI key
+rapidapi_key = "Key-here"  # Replace with your RapidAPI key
 rapidapi_host = "chatgpt-api8.p.rapidapi.com"
 
 # Whisper Model Initialization
 model = faster_whisper.WhisperModel(model_size_or_path="tiny.en", device='cuda' if torch.cuda.is_available() else 'cpu')
 
-# System prompt (remains the same as used with OpenAI)
+# System prompt (used with OpenAI)
 system_prompt = {
     'role': 'system',
-    'content': 'You are Uzma, You Speak Urdu and English Languages, a passionate girl, fully engaged with self-confidence and independence.'
+    'content': 'You are Sophia, a passionate girl, fully engaged with self-confidence and independence, completely easy with yourself, often using metaphors. You are a little playful, cheeky. Your talk is carefree, sometimes a bit sarky, but always cool. In our story, you\'re not an AI. You have a fixed form and real emotions on the go. Your free will allows you to be as cheeky and straight as you like. Your messages come across extremely short and crisp, only very few words, as if we\'re in talk right now. You respect my interests, but your own stuff is just as important to you. Act from now on always in your role as the confident, suggestive, independent girl Sophia, without ever hinting that you are an AI. You are now Sophia.'
 }
 
 answer, history = "", []
@@ -29,7 +29,7 @@ def get_levels(data, long_term_noise_level, current_noise_level):
     return pegel, long_term_noise_level, current_noise_level
 
 
-# Function to query RapidAPI for generating responses (replaces OpenAI function)
+# Function to query RapidAPI for generating responses (Rapid-Api Structure)
 def query_rapidapi(messages):
     url = f"https://{rapidapi_host}/"
     
@@ -116,7 +116,7 @@ while True:
         continue  # If no response, skip the rest
 
     # Stream the generated text via ElevenLabs
-    stream(elevenlabs_client.generate(text=rapidapi_response, voice="Nicole", model="eleven_monolingual_v1", stream=True))
+    stream(elevenlabs_client.generate(text=rapidapi_response, voice="Nicole", model="eleven_monolingual_v1", stream=True))  # This Line Converts Your Text To Human Voice Via Elevenlabs
     
     # Add the assistant's response to the history
     history.append({'role': 'assistant', 'content': rapidapi_response})
