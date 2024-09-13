@@ -7,7 +7,7 @@ os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"
 elevenlabs_client = ElevenLabs(api_key="sk_36d9ac569bee03392bb2bc558830ea96be79544936603a3f")
 
 # RapidAPI details
-rapidapi_key = "d85232a2d1msh531ed756d160270p1c006ajsn38430db57ac4"  # Replace with your RapidAPI key
+rapidapi_key = "012d97dff3msh3a2810ff8204035p150686jsnb65bf13b5fa2"  # Replace with your RapidAPI key
 rapidapi_host = "chatgpt-api8.p.rapidapi.com"
 
 # Whisper Model Initialization for Hindi (language code "hi")
