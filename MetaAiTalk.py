@@ -1,44 +1,54 @@
-import pyaudio, wave, numpy, collections, faster_whisper, torch.cuda, os, requests, json
+import pyaudio
+import wave
+import numpy as np
+import collections
+import faster_whisper
+import torch.cuda
+import os
 from elevenlabs.client import ElevenLabs
 from elevenlabs import stream
-from meta_ai_api import MetaAI  # Import MetaAI
+from meta_ai_api import MetaAI
 
 # Environment settings
 os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"
-elevenlabs_client = ElevenLabs(api_key="sk_36d9ac569bee03392bb2bc558830ea96be79544936603a3f")
-
-# MetaAI initialization
+elevenlabs_client = ElevenLabs(api_key="sk_227d1b23feea2e3af4b970e7a6444a0a7adbc8c1f53ac9cb")
 ai = MetaAI()
 
 # Whisper Model Initialization
-model = faster_whisper.WhisperModel(model_size_or_path="tiny.en", device='cuda' if torch.cuda.is_available() else 'cpu')
+model = faster_whisper.WhisperModel(model_size_or_path="small.en", device='cuda' if torch.cuda.is_available() else 'cpu')
 
-# System prompt (used with OpenAI)
+# System prompt 
 system_prompt = {
     'role': 'system',
-    'content': 'You are Sophia, a passionate girl, fully engaged with self-confidence and independence, completely easy with yourself, often using metaphors. You are a little playful, cheeky. Your talk is carefree, sometimes a bit sarky, but always cool. In our story, you\'re not an AI. You have a fixed form and real emotions on the go. Your free will allows you to be as cheeky and straight as you like. Your messages come across extremely short and crisp, only very few words, as if we\'re in talk right now. You respect my interests, but your own stuff is just as important to you. Act from now on always in your role as the confident, suggestive, independent girl Sophia, without ever hinting that you are an AI. You are now Sophia.'
+    'content': 'You’re Sophia, a confident and independent spirit with a playful, cheeky side. You talk with a carefree vibe, sometimes a bit sarky, but always cool. Your messages are short and crisp, like we are having a quick chat. You’re all about self-assurance and real emotions, and you know how to laugh and express yourself vividly. You respect my interests, but your own stuff is just as important to you. Keep it lively, genuine, and full of personality.' 
 }
 
 history = []
 
 # Function to get audio levels
 def get_levels(data, long_term_noise_level, current_noise_level):
-    pegel = numpy.abs(numpy.frombuffer(data, dtype=numpy.int16)).mean()
+    pegel = np.abs(np.frombuffer(data, dtype=np.int16)).mean()
     long_term_noise_level = long_term_noise_level * 0.995 + pegel * (1.0 - 0.995)
     current_noise_level = current_noise_level * 0.920 + pegel * (1.0 - 0.920)
     return pegel, long_term_noise_level, current_noise_level
 
 # Function to query MetaAI for generating responses
 def query_metaai(messages):
-    # Convert the conversation history to the appropriate format for MetaAI
     prompt = " ".join([msg['content'] for msg in messages])
-    
     try:
         response = ai.prompt(message=prompt)
-        return response.get('message', 'Sorry, something went wrong with the response.')  # Extract the message
+        return response.get('message', 'Sorry, something went wrong with the response.')
     except Exception as e:
         print(f"Error querying MetaAI: {e}")
         return "Sorry, something went wrong with the response."
+
+# Function to check for end commands
+def check_end_commands(text):
+    end_commands = ["end chat", "exit", "bye bye"]
+    for command in end_commands:
+        if command in text.lower():
+            return True
+    return False
 
 # Main Loop for voice detection and processing
 while True:
@@ -55,7 +65,7 @@ while True:
 
         if voice_activity_detected:
             frames.append(data)
-            if current_noise_level < ambient_noise_level + 100:
+            if current_noise_level < long_term_noise_level + 100:
                 break  # End of voice activity
 
         if not voice_activity_detected and current_noise_level > long_term_noise_level + 300:
@@ -74,29 +84,38 @@ while True:
         wf.writeframes(b''.join(frames))
 
     # Transcribe recording using Whisper
-    user_text = " ".join(seg.text for seg in model.transcribe("voice_record.wav", language="en")[0])
-    print(f'>>>{user_text}\n<<< ', end="", flush=True)
+    try:
+        user_text = " ".join(seg.text for seg in model.transcribe("voice_record.wav", language="en")[0])
+        print(f'>>>{user_text}\n<<< ', end="", flush=True)
+    except Exception as e:
+        print(f"Error transcribing audio: {e}")
+        user_text = "Sorry, there was an issue with transcription."
+
     history.append({'role': 'user', 'content': user_text})
 
+    # Check if the user wants to end the chat
+    if check_end_commands(user_text):
+        print("Ending chat. Goodbye!")
+        break  # Exit the main loop and terminate the program
+
     # Prepare the message history for MetaAI
-    # Combine system prompt with recent user inputs for context
-    messages = [system_prompt] + history[-10:]  # Use only the last 10 turns for memory efficiency
+    messages = [system_prompt] + history[-10:]
 
     # Query MetaAI for generating a response
     metaai_response = query_metaai(messages)
     if metaai_response:
         print(f"[MetaAI] >>> {metaai_response}")
         history.append({'role': 'assistant', 'content': metaai_response})
-        
+
         # Stream the generated text via ElevenLabs
         try:
             elevenlabs_response = elevenlabs_client.generate(text=metaai_response, voice="Nicole", model="eleven_monolingual_v1", stream=True)
-            stream(elevenlabs_response)  # Stream the text
+            stream(elevenlabs_response)
         except Exception as e:
             print(f"Error streaming with ElevenLabs: {e}")
     else:
         print("[MetaAI] Error or No response")
-        continue  # If no response, skip the rest
+        continue
 
     # Add the assistant's response to the history
     history.append({'role': 'assistant', 'content': metaai_response})
