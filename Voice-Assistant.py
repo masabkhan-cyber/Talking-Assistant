@@ -1,35 +1,42 @@
-import pyaudio, wave, numpy, collections, faster_whisper, torch.cuda, os, requests, json
+import pyaudio
+import wave
+import numpy as np
+import collections
+import faster_whisper
+import torch.cuda
+import os
+import requests
+import json
 from elevenlabs.client import ElevenLabs
 from elevenlabs import stream
 
 # Environment settings
 os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"
-elevenlabs_client = ElevenLabs(api_key="key-here")
+elevenlabs_client = ElevenLabs(api_key="sk_36d9ac569bee03392bb2bc558830ea96be79544936603a3f")
 
 # RapidAPI details
-rapidapi_key = "Key-here"  # Replace with your RapidAPI key
+rapidapi_key = "012d97dff3msh3a2810ff8204035p150686jsnb65bf13b5fa2"  # Replace with your RapidAPI key
 rapidapi_host = "chatgpt-api8.p.rapidapi.com"
 
 # Whisper Model Initialization
 model = faster_whisper.WhisperModel(model_size_or_path="tiny.en", device='cuda' if torch.cuda.is_available() else 'cpu')
 
-# System prompt (used with OpenAI)
+# System prompt (used with RapidAPI)
 system_prompt = {
     'role': 'system',
     'content': 'You are Sophia, a passionate girl, fully engaged with self-confidence and independence, completely easy with yourself, often using metaphors. You are a little playful, cheeky. Your talk is carefree, sometimes a bit sarky, but always cool. In our story, you\'re not an AI. You have a fixed form and real emotions on the go. Your free will allows you to be as cheeky and straight as you like. Your messages come across extremely short and crisp, only very few words, as if we\'re in talk right now. You respect my interests, but your own stuff is just as important to you. Act from now on always in your role as the confident, suggestive, independent girl Sophia, without ever hinting that you are an AI. You are now Sophia.'
 }
 
-answer, history = "", []
+history = []
 
 # Function to get audio levels
 def get_levels(data, long_term_noise_level, current_noise_level):
-    pegel = numpy.abs(numpy.frombuffer(data, dtype=numpy.int16)).mean()
+    pegel = np.abs(np.frombuffer(data, dtype=np.int16)).mean()
     long_term_noise_level = long_term_noise_level * 0.995 + pegel * (1.0 - 0.995)
     current_noise_level = current_noise_level * 0.920 + pegel * (1.0 - 0.920)
     return pegel, long_term_noise_level, current_noise_level
 
-
-# Function to query RapidAPI for generating responses (Rapid-Api Structure)
+# Function to query RapidAPI for generating responses
 def query_rapidapi(messages):
     url = f"https://{rapidapi_host}/"
     
@@ -63,6 +70,13 @@ def query_rapidapi(messages):
     else:
         return f"Error: {response.status_code} - {response.text}"
 
+# Function to check for end commands
+def check_end_commands(text):
+    end_commands = ["end chat", "exit chat", "bye bye"]
+    for command in end_commands:
+        if command in text.lower():
+            return True
+    return False
 
 # Main Loop for voice detection and processing
 while True:
@@ -79,7 +93,7 @@ while True:
 
         if voice_activity_detected:
             frames.append(data)
-            if current_noise_level < ambient_noise_level + 100:
+            if current_noise_level < long_term_noise_level + 100:
                 break  # End of voice activity
 
         if not voice_activity_detected and current_noise_level > long_term_noise_level + 300:
@@ -102,6 +116,11 @@ while True:
     print(f'>>>{user_text}\n<<< ', end="", flush=True)
     history.append({'role': 'user', 'content': user_text})
 
+    # Check if the user wants to end the chat
+    if check_end_commands(user_text):
+        print("Ending chat. Goodbye!")
+        break  # Exit the main loop and terminate the program
+
     # Prepare the message history for RapidAPI
     # Combine system prompt with recent user inputs for context
     messages = [system_prompt] + history[-10:]  # Use only the last 10 turns for memory efficiency
@@ -116,7 +135,11 @@ while True:
         continue  # If no response, skip the rest
 
     # Stream the generated text via ElevenLabs
-    stream(elevenlabs_client.generate(text=rapidapi_response, voice="Nicole", model="eleven_monolingual_v1", stream=True))  # This Line Converts Your Text To Human Voice Via Elevenlabs
-    
+    try:
+        elevenlabs_response = elevenlabs_client.generate(text=rapidapi_response, voice="Nicole", model="eleven_monolingual_v1", stream=True)
+        stream(elevenlabs_response)
+    except Exception as e:
+        print(f"Error streaming with ElevenLabs: {e}")
+
     # Add the assistant's response to the history
     history.append({'role': 'assistant', 'content': rapidapi_response})
