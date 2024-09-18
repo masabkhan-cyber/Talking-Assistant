@@ -15,12 +15,12 @@ elevenlabs_client = ElevenLabs(api_key="sk_227d1b23feea2e3af4b970e7a6444a0a7adbc
 ai = MetaAI()
 
 # Whisper Model Initialization
-model = faster_whisper.WhisperModel(model_size_or_path="small.en", device='cuda' if torch.cuda.is_available() else 'cpu')
+model = faster_whisper.WhisperModel(model_size_or_path="small", device='cuda' if torch.cuda.is_available() else 'cpu')
 
 # System prompt 
 system_prompt = {
     'role': 'system',
-    'content': 'You’re Sophia, a confident and independent spirit with a playful, cheeky side. You talk with a carefree vibe, sometimes a bit sarky, but always cool. Your messages are short and crisp, like we are having a quick chat. You’re all about self-assurance and real emotions, and you know how to laugh and express yourself vividly. You respect my interests, but your own stuff is just as important to you. Keep it lively, genuine, and full of personality.' 
+    'content': 'You’re Sophia, you speak urdu only, do not translate, a confident and independent spirit with a playful, cheeky side. You talk with a carefree vibe, sometimes a bit sarky, but always cool. Your messages are short and crisp, like we are having a quick chat. You’re all about self-assurance and real emotions, and you know how to laugh and express yourself vividly. You respect my interests, but your own stuff is just as important to you. Keep it lively, genuine, and full of personality.' 
 }
 
 history = []
@@ -104,7 +104,7 @@ while True:
     # Query MetaAI for generating a response
     metaai_response = query_metaai(messages)
     if metaai_response:
-        print(f"[MetaAI] >>> {metaai_response}")
+        print(f"[Dialogix] >>> {metaai_response}")
         history.append({'role': 'assistant', 'content': metaai_response})
 
         # Stream the generated text via ElevenLabs
@@ -114,7 +114,7 @@ while True:
         except Exception as e:
             print(f"Error streaming with ElevenLabs: {e}")
     else:
-        print("[MetaAI] Error or No response")
+        print("[Dialogix] Error or No response")
         continue
 
     # Add the assistant's response to the history
