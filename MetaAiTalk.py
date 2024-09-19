@@ -11,7 +11,7 @@ from meta_ai_api import MetaAI
 
 # Environment settings
 os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"
-elevenlabs_client = ElevenLabs(api_key="sk_227d1b23feea2e3af4b970e7a6444a0a7adbc8c1f53ac9cb")
+elevenlabs_client = ElevenLabs(api_key="sk_b73fa13972acbffa5693345972ccd6520828fcf6b281aced")
 ai = MetaAI()
 
 # Whisper Model Initialization
@@ -109,7 +109,7 @@ while True:
 
         # Stream the generated text via ElevenLabs
         try:
-            elevenlabs_response = elevenlabs_client.generate(text=metaai_response, voice="Nicole", model="eleven_monolingual_v1", stream=True)
+            elevenlabs_response = elevenlabs_client.generate(text=metaai_response, voice="Devi - Clear Hindi pronunciation", model="eleven_multilingual_v2", stream=True)
             stream(elevenlabs_response)
         except Exception as e:
             print(f"Error streaming with ElevenLabs: {e}")
