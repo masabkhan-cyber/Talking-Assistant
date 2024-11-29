@@ -14,7 +14,7 @@ os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"
 ai = MetaAI()
 
 # Whisper Model Initialization
-model = faster_whisper.WhisperModel(model_size_or_path="small", device='cuda' if torch.cuda.is_available() else 'cpu')
+model = faster_whisper.WhisperModel(model_size_or_path="tiny", device='cuda' if torch.cuda.is_available() else 'cpu')
 
 # System prompt
 system_prompt = {
