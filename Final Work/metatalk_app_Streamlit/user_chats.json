@@ -1,0 +1,84 @@
+{
+    "masab": {
+        "chat_sessions": [
+            [
+                {
+                    "role": "user",
+                    "content": "salam "
+                },
+                {
+                    "role": "assistant",
+                    "content": "Wa alaikum salam! Kya main aapki madad kar sakti hoon?\n"
+                },
+                {
+                    "role": "user",
+                    "content": "masab kon hai"
+                },
+                {
+                    "role": "assistant",
+                    "content": "Masab Saleem Umar Sahibzada hain ek Data Scientist aur Web Developer. Unhone IMSciences se graduation kiya hai aur machine learning, data analysis aur modern web technologies mein mahir hain. Unhone Dialogics naam ka ek project bhi banaya hai jo ek LLM-based chatbot hai. Woh intelligent systems banane mein interested hain jo humans aur machines ke beech gap ko kam karte hain.\n"
+                },
+                {
+                    "role": "user",
+                    "content": "masab kon hai?"
+                },
+                {
+                    "role": "assistant",
+                    "content": "Masab ek famous Pakistani actress aur model hain, jinka poora naam Masab Fatima hain. Woh apne kaam ke liye mashhoor hain aur unhone kai TV dramas aur fashion campaigns mein kaam kiya hai. Unka style aur acting skills bahut logon ko pasand aate hain.\n"
+                },
+                {
+                    "role": "user",
+                    "content": "masab kon hai?"
+                },
+                {
+                    "role": "assistant",
+                    "content": "Mera naam Sophia hai, aur main aapki madad karne ke liye yahaan hoon. Masab Saleem Umar Sahibzada ek Data Scientist aur Web Developer hain. Unhone IMSciences se graduation kiya hai aur machine learning, data analysis, aur modern web technologies mein mahir hain. Unhone Dialogics naam ka ek LLM-based chatbot bhi develop kiya hai jo conversational AI interactions ko behtar banata hai. Masab ka passion intelligent systems develop karna hai jo insaan aur machines ke beech gap ko kam karte hain.\n"
+                },
+                {
+                    "role": "user",
+                    "content": "Mr ijaz kon hai?"
+                },
+                {
+                    "role": "assistant",
+                    "content": "Mera naam Sophia hai, aur main aapki madad karne ke liye yahaan hoon. Mr. Ijaz Ullah ek supervisor hain jinhone apne project mein students ki madad ki. Unhone apne immense knowledge, patience, aur motivation se students ki guidance ki aur unhein project ke har mod par support kiya. Mr. Ijaz Ullah ka enthusiasm aur guidance students ke liye bahut helpful raha hai.\n"
+                },
+                {
+                    "role": "user",
+                    "content": " Before I peek it's about time."
+                },
+                {
+                    "role": "assistant",
+                    "content": "Mujhe samajh nahi aaya, aap kis bare mein baat kar rahe hain? Aapne pehle kuch kaha \"Before I peek it's about time\" lekin iska context clear nahi hai. Kya aap kuch specific sawal puchna chahte hain ya kisi cheez ke bare mein baat karna chahte hain? Main yahaan hoon aapki madad ke liye.\n"
+                },
+                {
+                    "role": "user",
+                    "content": " FYP subject, kiske baare main hai?"
+                },
+                {
+                    "role": "assistant",
+                    "content": "Mera naam Sophia hai, aur main aapki madad karne ke liye yahaan hoon. FYP ka subject AI-powered bilingual conversational agent ke baare mein hai. Yeh project e-learning ke liye banaya gaya hai jahan students ko AI ki madad se Urdu aur English mein seekhne ka mauka milega. Is project ka maqsad hai Pakistan mein online learning ko behtar banana aur students ko unki zarooraton ke hisaab se seekhne ka mauka dena.\n"
+                }
+            ]
+        ],
+        "chat_session_names": [
+            "Chat 1"
+        ],
+        "chat_pdf_paths": [
+            [
+                "user_uploads\\masab\\masab.pdf",
+                "user_uploads\\masab\\FYP_Report_Bs_Ds_2025_AI_Powered_Bilingual_Conversational_Agent_For_E_learning.pdf"
+            ]
+        ]
+    },
+    "wasiq": {
+        "chat_sessions": [
+            []
+        ],
+        "chat_session_names": [
+            "New Chat"
+        ],
+        "chat_pdf_paths": [
+            []
+        ]
+    }
+}
