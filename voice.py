@@ -108,12 +108,12 @@ def speak_text(response_text, api_key):
         return
     try:
         client = ElevenLabs(api_key=api_key)
-        audio = client.generate(
+        audio_stream = client.text_to_speech.stream(
             text=response_text,
-            voice="hGb0Exk8cp4vQEnwolxa",  # Replace with your voice ID
-            model="eleven_multilingual_v2",
-            stream=True
+            voice_id="JNaMjd7t4u3EhgkVknn3",  # This is the corrected line
+            model_id="eleven_multilingual_v2"
         )
-        el_stream(audio)
+        el_stream(audio_stream)
+
     except Exception as e:
         st.error(f"🛑 TTS Error: {e}")
