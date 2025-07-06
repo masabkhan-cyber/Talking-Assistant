@@ -1,7 +1,7 @@
 # 🤖 Dialogix: Your AI-Powered Learning Assistant
 
 <p align="center">
-  ![Dialogix Screenshot](assets/dialogix-screenshot.png)
+  ![Dialogix Screenshot](assets/screenshot.png)
   <br/>
   <em>A modern, multi-user e-learning platform built with Streamlit that leverages Retrieval-Augmented Generation (RAG) to chat with documents, generate quizzes, and provide voice-enabled interaction.</em>
 </p>
