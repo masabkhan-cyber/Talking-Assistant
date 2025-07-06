@@ -32,7 +32,6 @@ This project integrates a range of modern technologies to deliver its features:
 * **Speech-to-Text**: `faster-whisper`
 * **Text-to-Speech**: `elevenlabs`
 * **PDF Generation**: `fpdf2`
-* **Packaging**: PyInstaller, Inno Setup
 
 ---
 
