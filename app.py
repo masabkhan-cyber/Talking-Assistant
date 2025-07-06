@@ -6,7 +6,8 @@ from ui import (
     show_pdf_manager_in_sidebar,
     sidebar_navigation,
     show_settings_page,
-    show_chat_page
+    show_chat_page,
+    show_quiz_page # Import the new quiz page function
 )
 from user_data import save_user_data_from_session, load_user_data_into_session
 
@@ -55,6 +56,10 @@ else:
     if st.session_state.page == "settings":
         show_settings_page(st.session_state)
     
+    elif st.session_state.page == "quiz":
+        # Add routing for the new quiz page
+        show_quiz_page(st.session_state)
+
     elif st.session_state.page == "chat":
         # All chat page logic is now handled by this function from ui.py
         show_chat_page(st.session_state)

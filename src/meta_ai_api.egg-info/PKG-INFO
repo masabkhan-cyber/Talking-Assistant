@@ -1,0 +1,29 @@
+Metadata-Version: 2.1
+Name: meta-ai-api
+Version: 1.2.1
+Summary: A Python wrapper to interact with the Meta AI API
+Home-page: UNKNOWN
+Author: Masab Saleem
+Author-email: saleemmasab@gmail.com
+License: UNKNOWN
+Keywords: llm,ai,meta,meta-ai,api-wrapper
+Platform: UNKNOWN
+Classifier: Development Status :: 5 - Production/Stable
+Classifier: Intended Audience :: Developers
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python :: 3 :: Only
+Classifier: Programming Language :: Python :: 3.6
+Classifier: Programming Language :: Python :: 3.7
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Requires-Python: >=3.6
+Description-Content-Type: text/markdown
+Provides-Extra: dev
+
+UNKNOWN
+

@@ -1,1 +1,0 @@
-pip install streamlit streamlit-chat streamlit-webrtc faster-whisper faiss-cpu langchain huggingface-hub elevenlabs soundfile PyPDF2

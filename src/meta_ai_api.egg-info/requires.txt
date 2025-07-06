@@ -1,0 +1,6 @@
+requests
+requests-html
+lxml_html_clean
+
+[dev]
+check-manifest

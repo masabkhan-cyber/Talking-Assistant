@@ -1,0 +1,24 @@
+# File: requirements.txt
+
+# Dependencies for Dialogix Application
+streamlit
+streamlit-chat
+streamlit-webrtc
+faster-whisper
+faiss-cpu
+langchain
+huggingface-hub
+elevenlabs
+soundfile
+PyPDF2
+fpdf2
+pyaudio
+torch
+numpy
+noisereduce
+
+# Dependencies for the meta_ai_api library
+requests
+requests-html
+lxml_html_clean
+bs4

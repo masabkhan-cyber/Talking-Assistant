@@ -1,0 +1,12 @@
+README.md
+setup.cfg
+setup.py
+src/meta_ai_api/__init__.py
+src/meta_ai_api/exceptions.py
+src/meta_ai_api/main.py
+src/meta_ai_api/utils.py
+src/meta_ai_api.egg-info/PKG-INFO
+src/meta_ai_api.egg-info/SOURCES.txt
+src/meta_ai_api.egg-info/dependency_links.txt
+src/meta_ai_api.egg-info/requires.txt
+src/meta_ai_api.egg-info/top_level.txt
