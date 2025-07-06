@@ -1,7 +1,7 @@
 # 🤖 Dialogix: Your AI-Powered Learning Assistant
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/masabkhan-cyber/Talking-Assistant/main/assets/screenshot.png" alt="Dialogix Screenshot" width="800">
+  <img src="https://raw.githubusercontent.com/masabkhan-cyber/Dialogix/master/assets/screenshot.png" alt="Dialogix Screenshot" width="800">
   <br/>
   <em>A modern, multi-user e-learning platform built with Streamlit that leverages Retrieval-Augmented Generation (RAG) to chat with documents, generate quizzes, and provide voice-enabled interaction.</em>
 </p>
@@ -27,7 +27,7 @@ Dialogix combines several powerful AI features into a single, user-friendly web 
 This project integrates a range of modern technologies to deliver its features:
 
 * **Backend & Frontend**: Python, Streamlit
-* **LLM & Chat Logic**: `meta-ai-api`
+* **LLM & Chat Logic**: `meta_ai_api`
 * **Document Intelligence (RAG)**: LangChain, FAISS, PyPDF2
 * **Speech-to-Text**: `faster-whisper`
 * **Text-to-Speech**: `elevenlabs`
@@ -49,8 +49,8 @@ Follow these instructions to set up and run Dialogix on your local machine.
 
 1.  **Clone the repository:**
     ```bash
-    git clone [https://github.com/masabkhan-cyber/dialogix.git](https://github.com/masabkhan-cyber/dialogix.git)
-    cd dialogix
+    git clone [https://github.com/masabkhan-cyber/Dialogix.git](https://github.com/masabkhan-cyber/Dialogix.git)
+    cd Dialogix
     ```
 
 2.  **Install all dependencies:**
