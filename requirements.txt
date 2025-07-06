@@ -16,6 +16,11 @@ pyaudio
 torch
 numpy
 noisereduce
+langchain-community
+langchain_huggingface
+sentence_transformers
+hf_xet
+pypdf
 
 # Dependencies for the meta_ai_api library
 requests
