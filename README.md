@@ -55,7 +55,10 @@ Follow these instructions to set up and run Dialogix on your local machine.
 2.  **Install all dependencies:**
     Make sure you have the master `requirements.txt` file from the project. Then, run:
     ```bash
-    pip install -r requirements.txt
+    python -m ensurepip --upgrade
+    python -m pip install .
+    python -m pip install --upgrade pip
+    python -m pip install -r requirements.txt
     ```
 
 3.  **Configure API Keys:**
