@@ -1,7 +1,7 @@
 # 🤖 Dialogix: Your AI-Powered Learning Assistant
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/masabkhan-cyber/Talking-Assistant/assets/screenshot.png" alt="Dialogix Screenshot" width="800">
+  <img src="https://raw.githubusercontent.com/masabkhan-cyber/Talking-Assistant/main/assets/screenshot.png" alt="Dialogix Screenshot" width="800">
   <br/>
   <em>A modern, multi-user e-learning platform built with Streamlit that leverages Retrieval-Augmented Generation (RAG) to chat with documents, generate quizzes, and provide voice-enabled interaction.</em>
 </p>
