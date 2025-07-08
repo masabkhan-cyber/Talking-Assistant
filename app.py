@@ -11,6 +11,10 @@ from ui import (
 )
 from user_data import save_user_data_from_session, load_user_data_into_session
 
+# --- Page Configuration ---
+# Set the page title and icon. This is the official way to name your Streamlit app.
+st.set_page_config(page_title="Dialogix", page_icon="🤖")
+
 # --- Session State Initialization ---
 def initialize_session_state():
     """Initializes the basic session state variables if they don't exist."""
@@ -30,6 +34,8 @@ initialize_session_state()
 
 # If the user is not logged in, show the login/registration form.
 if not st.session_state.logged_in:
+    st.title("Welcome to Dialogix 🤖")
+    st.write("Your intelligent chat companion.")
     show_login_form()
 
 # If the user is logged in, show the main application.
@@ -39,7 +45,8 @@ else:
         load_user_data_into_session(st.session_state.username)
 
     # --- Sidebar ---
-    st.sidebar.title(f"Welcome, {st.session_state.username}!")
+    st.sidebar.title("Dialogix")
+    st.sidebar.markdown(f"Welcome, **{st.session_state.username}**!")
     
     sidebar_session_selector()
     show_pdf_manager_in_sidebar(st.session_state)
@@ -47,6 +54,7 @@ else:
 
     if st.sidebar.button("Logout", use_container_width=True):
         save_user_data_from_session(st.session_state.username)
+        # Clear the session state upon logout
         for key in list(st.session_state.keys()):
             del st.session_state[key]
         initialize_session_state()
