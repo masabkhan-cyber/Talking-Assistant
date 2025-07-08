@@ -103,3 +103,37 @@ def delete_pdf_for_user(pdf_path_to_delete):
             return False, "File not found."
     except Exception as e:
         return False, f"Error deleting file: {e}"
+
+def create_new_chat_session(username):
+    """Appends a new, empty chat session to the session state and saves."""
+    st.session_state.chat_sessions.append([])
+    new_chat_name = f"Chat {len(st.session_state.chat_sessions)}"
+    st.session_state.chat_session_names.append(new_chat_name)
+    st.session_state.chat_pdf_paths.append([])
+    st.session_state.chat_engines.append(ChatEngine(st.session_state.config))
+    # Set the new chat as current and save
+    st.session_state.current_chat = len(st.session_state.chat_sessions) - 1
+    save_user_data_from_session(username)
+
+def delete_chat_session(username, chat_index):
+    """Deletes a chat session, its associated PDF files, and updates session state."""
+    # Step 1: Delete the physical PDF files associated with the chat
+    if 0 <= chat_index < len(st.session_state.chat_pdf_paths):
+        # Retrieve the list of PDF paths before popping it
+        pdfs_to_delete = st.session_state.chat_pdf_paths[chat_index]
+        for pdf_path in pdfs_to_delete:
+            if os.path.exists(pdf_path):
+                try:
+                    os.remove(pdf_path)
+                except OSError as e:
+                    print(f"Error deleting file {pdf_path}: {e}")
+
+    # Step 2: Remove the chat data from the session state
+    if 0 <= chat_index < len(st.session_state.chat_session_names):
+        st.session_state.chat_sessions.pop(chat_index)
+        st.session_state.chat_session_names.pop(chat_index)
+        st.session_state.chat_pdf_paths.pop(chat_index)
+        st.session_state.chat_engines.pop(chat_index)
+    
+    # Step 3: Save the updated session data to the JSON file
+    save_user_data_from_session(username)

@@ -6,7 +6,14 @@ import streamlit as st
 from fpdf import FPDF
 from chat_engine import ChatEngine
 from auth import login_user, register_user
-from user_data import handle_pdf_upload, save_user_data_from_session, delete_pdf_for_user
+# MODIFIED: Import the new data functions
+from user_data import (
+    handle_pdf_upload, 
+    save_user_data_from_session, 
+    delete_pdf_for_user,
+    create_new_chat_session,
+    delete_chat_session
+)
 from config import save_config
 from voice import speak_text, start_recording, stop_recording, transcribe_audio
 from quiz_generator import QuizGenerator
@@ -180,17 +187,18 @@ def sidebar_session_selector():
             save_user_data_from_session(st.session_state.username)
         st.session_state.editing_chat_index = None
 
+    # REFACTORED: This function now calls the centralized deletion logic
     def handle_delete_chat(index):
         if len(st.session_state.chat_session_names) > 1:
-            deleted_name = st.session_state.chat_session_names.pop(index)
-            st.session_state.chat_sessions.pop(index)
-            st.session_state.chat_pdf_paths.pop(index)
-            st.session_state.chat_engines.pop(index)
+            deleted_name = st.session_state.chat_session_names[index]
 
+            # Call the data layer to handle deletion of files and session data
+            delete_chat_session(st.session_state.username, index)
+
+            # Adjust the current chat index in the UI if necessary
             if st.session_state.current_chat >= index:
                 st.session_state.current_chat = max(0, st.session_state.current_chat - 1)
             
-            save_user_data_from_session(st.session_state.username)
             st.session_state.editing_chat_index = None 
             st.toast(f"Chat '{deleted_name}' deleted.", icon="🗑️")
         else:
@@ -234,15 +242,11 @@ def sidebar_session_selector():
                     handle_delete_chat(i)
                     st.rerun()
 
+    # REFACTORED: This button now calls the centralized creation logic
     if st.sidebar.button("➕ New Chat", use_container_width=True):
-        st.session_state.chat_sessions.append([])
-        st.session_state.chat_session_names.append(f"Chat {len(st.session_state.chat_sessions)}")
-        st.session_state.chat_pdf_paths.append([])
-        st.session_state.chat_engines.append(ChatEngine(st.session_state.config))
-        st.session_state.current_chat = len(st.session_state.chat_sessions) - 1
+        create_new_chat_session(st.session_state.username)
         st.session_state.page = "chat"
         st.session_state.editing_chat_index = None
-        save_user_data_from_session(st.session_state.username)
         st.rerun()
 
 
