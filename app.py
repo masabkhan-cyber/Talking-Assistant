@@ -34,8 +34,8 @@ initialize_session_state()
 
 # If the user is not logged in, show the login/registration form.
 if not st.session_state.logged_in:
-    st.title("Welcome to Dialogix 🤖")
-    st.write("Your intelligent chat companion.")
+    st.markdown("<h1 style='text-align: center;'>Welcome to Dialogix 🤖</h1>", unsafe_allow_html=True)
+    st.markdown("<p style='text-align: center;'>Your intelligent E Learning chat companion.</p>", unsafe_allow_html=True)
     show_login_form()
 
 # If the user is logged in, show the main application.
