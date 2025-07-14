@@ -3,7 +3,6 @@
 # Dependencies for Dialogix Application
 streamlit
 streamlit-chat
-streamlit-webrtc
 faster-whisper
 faiss-cpu
 langchain
@@ -23,6 +22,7 @@ hf_xet
 pypdf
 
 # Dependencies for the meta_ai_api library
+meta_ai_api
 requests
 requests-html
 lxml_html_clean
